@@ -7,13 +7,15 @@ export const metadata: Metadata = { title: "Contact" };
 
 export default function ContactPage() {
   return (
+    <div className="bg-white">
     <section className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
       <Reveal dir="left">
-        <h1 className="font-serif text-5xl text-ink sm:text-6xl">Contact</h1>
+        <h1 className="font-serif text-5xl font-bold text-ink sm:text-6xl">Contact</h1>
         <p className="mt-4 max-w-md leading-relaxed text-taupe">
           For enquiries about available works, commissions, or exhibitions,
           please get in touch.
         </p>
+        <hr className="mt-8 border-t border-line" />
       </Reveal>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-2">
@@ -78,5 +80,6 @@ export default function ContactPage() {
         </Reveal>
       </div>
     </section>
+    </div>
   );
 }

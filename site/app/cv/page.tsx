@@ -15,9 +15,10 @@ function Row({ year, detail }: { year: string; detail: string }) {
 
 export default function CVPage() {
   return (
+    <div className="bg-white">
     <section className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16">
       <Reveal dir="left">
-        <h1 className="font-serif text-5xl text-ink sm:text-6xl">
+        <h1 className="font-serif text-5xl font-bold text-ink sm:text-6xl">
           Curriculum Vitae
         </h1>
         <p className="mt-4 text-cocoa">
@@ -66,5 +67,6 @@ export default function CVPage() {
         </div>
       </Reveal>
     </section>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ export default function WorkCard({
 }) {
   return (
     <Link href={`/works/${work.id}`} className="group block">
-      <div className="overflow-hidden border border-line bg-paper">
+      <div className="overflow-hidden rounded-xl border border-ink bg-paper">
         <Image
           src={work.src}
           alt={`${work.title} — ${work.medium}`}
@@ -24,12 +24,14 @@ export default function WorkCard({
           className="zoom-img h-auto w-full"
         />
       </div>
-      <div className="mt-3">
-        <p className="font-serif text-xl leading-tight text-ink transition-colors group-hover:text-accent">
+      <div className="mt-1.5 rounded-xl border border-ink bg-ink p-4">
+        <p className="font-serif text-xl leading-tight text-cream transition-colors group-hover:text-gold">
           {work.title}
         </p>
-        <p className="mt-1 text-xs leading-relaxed text-taupe">{work.medium}</p>
-        <p className="text-xs text-taupe">{work.size}</p>
+        <p className="mt-1 text-xs leading-relaxed text-cream/70">
+          {work.medium}
+        </p>
+        <p className="text-xs text-cream/70">{work.size}</p>
       </div>
     </Link>
   );

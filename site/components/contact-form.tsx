@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { site } from "@/app/lib/site";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sent";
 
 const field =
   "w-full border border-line bg-white px-4 py-3 text-cocoa outline-none transition-colors placeholder:text-taupe focus:border-accent";
@@ -11,33 +11,37 @@ const field =
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    setStatus("sending");
-    try {
-      const res = await fetch(`https://formspree.io/f/${site.formspreeId}`, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setStatus("sent");
-        form.reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "");
+    const email = String(data.get("email") ?? "");
+    const message = String(data.get("message") ?? "");
+
+    const subject = encodeURIComponent(`Enquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    );
+    // Open the visitor's email client with the message pre-filled
+    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+    setStatus("sent");
   }
 
   if (status === "sent") {
     return (
       <div className="border border-line bg-paper p-8 text-center">
-        <p className="font-serif text-2xl text-ink">Thank you.</p>
+        <p className="font-serif text-2xl text-ink">Almost there.</p>
         <p className="mt-2 text-cocoa">
-          Your message has been sent — the artist will be in touch soon.
+          Your email app should have opened with the message ready — just press
+          send. If nothing opened, email{" "}
+          <a
+            href={`mailto:${site.email}`}
+            className="text-accent underline transition-colors hover:text-ink"
+          >
+            {site.email}
+          </a>{" "}
+          directly.
         </p>
       </div>
     );
@@ -77,16 +81,10 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        disabled={status === "sending"}
-        className="inline-flex items-center bg-ink px-7 py-3 text-sm tracking-wide text-cream transition-colors hover:bg-accent disabled:opacity-60"
+        className="inline-flex items-center bg-ink px-7 py-3 text-sm tracking-wide text-cream transition-colors hover:bg-accent"
       >
-        {status === "sending" ? "Sending…" : "Send message"}
+        Send message
       </button>
-      {status === "error" && (
-        <p className="text-sm text-accent">
-          Something went wrong. Please email {site.email} directly.
-        </p>
-      )}
     </form>
   );
 }

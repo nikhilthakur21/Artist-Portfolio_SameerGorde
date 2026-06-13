@@ -9,15 +9,13 @@ export const site = {
   email: "sameergorde1@gmail.com",
   tagline: "Drawings and paintings on paper — the body, memory, and migration.",
 
-  // TODO: add the real Instagram handle (e.g. "sameer.gorde")
-  instagramHandle: "your-handle",
+  instagramHandle: "sameer_gorde",
   get instagram() {
     return `https://instagram.com/${this.instagramHandle}`;
   },
 
-  // TODO: add real numbers (digits only for whatsapp, incl. country code)
-  phoneDisplay: "+91 00000 00000",
-  whatsapp: "910000000000",
+  phoneDisplay: "+91 70573 44622",
+  whatsapp: "917057344622",
 
   // TODO: paste a Formspree form id (https://formspree.io) to receive messages
   formspreeId: "your-id",

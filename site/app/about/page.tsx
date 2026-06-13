@@ -13,6 +13,7 @@ export const metadata: Metadata = { title: "About" };
 
 export default function AboutPage() {
   return (
+    <div className="bg-white">
     <section className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-16">
       <Reveal dir="left">
         <p className="text-xs uppercase tracking-[0.25em] text-taupe">
@@ -61,5 +62,6 @@ export default function AboutPage() {
         </div>
       </Reveal>
     </section>
+    </div>
   );
 }

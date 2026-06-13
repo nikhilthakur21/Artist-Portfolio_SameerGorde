@@ -31,6 +31,7 @@ export default async function WorkPage({
   const { prev, next } = neighbours(id);
 
   return (
+    <div className="bg-white">
     <section className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
       <Link
         href="/works"
@@ -41,7 +42,7 @@ export default async function WorkPage({
 
       <div className="mt-8 grid items-start gap-10 lg:grid-cols-[1.6fr_1fr]">
         <Reveal dir="zoom">
-          <div className="overflow-hidden border border-line bg-paper">
+          <div className="overflow-hidden rounded-xl border border-line bg-paper">
             <Image
               src={work.src}
               alt={`${work.title} — ${work.medium}`}
@@ -112,5 +113,6 @@ export default async function WorkPage({
         )}
       </div>
     </section>
+    </div>
   );
 }

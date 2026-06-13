@@ -175,22 +175,14 @@ export default function Home() {
       <section className="border-t border-line bg-[#faf9fb]">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
           <Reveal>
-            <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div className="min-w-0">
-                <h2 className="font-serif text-5xl text-ink sm:text-6xl">
-                  Bodies of <strong className="font-bold">Work</strong>
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-taupe sm:whitespace-nowrap">
-                  A selection across the artist&apos;s series — the body, memory,
-                  and migration.
-                </p>
-              </div>
-              <Link
-                href="/works"
-                className="shrink-0 text-sm text-accent transition-colors hover:text-ink"
-              >
-                View all →
-              </Link>
+            <div className="mb-10">
+              <h2 className="font-serif text-5xl text-ink sm:text-6xl">
+                Bodies of <strong className="font-bold">Work</strong>
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-taupe sm:whitespace-nowrap">
+                A selection across the artist&apos;s series — the body, memory,
+                and migration.
+              </p>
             </div>
           </Reveal>
           <div className="mx-auto mt-20 grid max-w-4xl grid-cols-1 gap-6 sm:auto-rows-fr sm:grid-cols-2">
@@ -245,6 +237,21 @@ export default function Home() {
               );
             })}
           </div>
+
+          {/* View more button below the collection cards */}
+          <Reveal dir="up">
+            <div className="mt-12 flex justify-center">
+              <Link
+                href="/works"
+                className="group inline-flex items-center gap-2 rounded-full border border-ink px-8 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-ink hover:text-cream"
+              >
+                View More
+                <span className="transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
