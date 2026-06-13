@@ -1,26 +1,54 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getWork, works, SERIES, type Work } from "@/app/lib/works";
-import { site } from "@/app/lib/site";
+import { getWork, works } from "@/app/lib/works";
+import { site, bio } from "@/app/lib/site";
 import Reveal from "@/components/reveal";
-import WorkCard from "@/components/work-card";
 
 const dirs = ["left", "up", "right", "zoom"] as const;
 
+// Title + description shown on each collection card
+const COLLECTIONS: {
+  series: string;
+  title: string;
+  desc: string;
+  img?: string;
+  zoom?: boolean;
+}[] = [
+  {
+    series: "Suffering",
+    title: "Civic Discourse & Cultural Commentary",
+    desc: "My art is a mirror to society, not just decoration. I confront the dark realities of socio-political issues head-on, refusing to soften them with symbolism or superficial beauty. By portraying these truths without a filter, I aim to provoke conversation and inspire genuine change.",
+    img: "suffering-6-5",
+  },
+  {
+    series: "Self Portrait",
+    title: "The Self & Inner Memory",
+    desc: "Turning the gaze inward, these works trace identity, lineage, and the weight of personal history — each portrait a record of memory, the body remembering what words cannot.",
+    img: "self-portrait-3-12",
+    zoom: true,
+  },
+  {
+    series: "Migration",
+    title: "Displacement & Belonging",
+    desc: "Born of a farming family that moved to the city, this series follows the journey between village and metropolis — the geographic, cultural, and emotional shifts that reshape the idea of home.",
+    img: "migration-3-27",
+  },
+  {
+    series: "Other",
+    title: "Studies & Explorations",
+    desc: "Drawings, studies, and works beyond the main series — explorations in ink, charcoal, and collage where new forms and ideas are tested.",
+    img: "everywhere-is-a-same-22",
+  },
+];
+
+const seriesHref = (s: string) => `/works?series=${encodeURIComponent(s)}`;
+
 export default function Home() {
   const hero = getWork(site.heroId) ?? works[0];
-  // One representative work per series
-  const featured = SERIES.map((s) =>
-    works.find((w) => w.series === s)
-  ).filter((w): w is Work => Boolean(w));
-
   return (
     <>
       {/* Hero */}
-      <section
-        className="relative overflow-hidden bg-[#FDFCFB] bg-cover bg-center"
-        style={{ backgroundImage: "url(/hero-waves.svg?v=5)" }}
-      >
+      <section className="relative overflow-hidden bg-white">
         {/* Halftone dot pattern in the four corners */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           {[
@@ -41,9 +69,9 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 sm:px-8 sm:pt-20 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 sm:px-8 sm:pt-20 lg:grid-cols-[auto_auto] lg:justify-center lg:gap-44">
           <Reveal dir="left">
-            <div className="rounded-3xl bg-paper p-8 text-center shadow-[0_30px_60px_-30px_rgba(38,28,21,0.25)] sm:p-12 lg:py-20 lg:text-left">
+            <div className="p-8 text-center sm:p-12 lg:py-20 lg:pr-0 lg:text-left">
               {/* role — sits above the name on desktop */}
               <p className="hidden text-xs uppercase tracking-[0.25em] text-taupe lg:block">
                 {site.role}
@@ -86,8 +114,8 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Reveal dir="zoom" className="lg:justify-self-end">
-            <div className="relative mx-auto max-w-xs lg:mx-0 lg:ml-auto">
+          <Reveal dir="zoom" className="lg:justify-self-start">
+            <div className="relative mx-auto max-w-xs lg:mx-0">
               {/* top-left corner bracket */}
               <span className="pointer-events-none absolute -left-5 -top-5 h-16 w-16 border-l-2 border-t-2 border-ink" />
               {/* bottom-right corner bracket */}
@@ -101,65 +129,116 @@ export default function Home() {
                 blurDataURL={hero.blur}
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="h-auto w-full border-2 border-ink shadow-[0_30px_60px_-25px_rgba(38,28,21,0.5)]"
+                className="h-auto w-full border-2 border-ink"
               />
             </div>
           </Reveal>
         </div>
       </section>
 
+      {/* A little bit about me */}
+      <section className="border-t border-line bg-white">
+        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+          <div className="grid gap-10 lg:grid-cols-[auto_auto] lg:justify-center lg:gap-36">
+            {/* Left — heading */}
+            <Reveal dir="left">
+              <h2 className="text-left font-serif text-5xl leading-[1.05] text-ink sm:text-6xl">
+                A Little Bit
+                <br />
+                About <strong className="font-bold">Me</strong>
+              </h2>
+            </Reveal>
+
+            {/* Right — body */}
+            <Reveal dir="right">
+              <div className="max-w-xl">
+                <p className="text-justify text-base leading-relaxed text-cocoa lg:text-left">{bio}</p>
+                <p className="mt-8 whitespace-nowrap font-serif text-[clamp(0.72rem,3.7vw,1.125rem)] leading-snug text-ink sm:whitespace-normal sm:text-3xl">
+                  Nostalgia. Migration. The body as language.
+                </p>
+                <div className="mt-10 flex flex-col items-end lg:items-start">
+                  <span className="mb-4 block h-px w-full bg-ink lg:w-12" />
+                  <Link
+                    href="/about"
+                    className="text-xs font-semibold uppercase tracking-[0.25em] text-ink transition-colors hover:text-accent"
+                  >
+                    Read More
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* Selected works */}
-      <section className="border-t border-line">
+      <section className="border-t border-line bg-[#faf9fb]">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
           <Reveal>
-            <div className="mb-10 flex items-end justify-between">
-              <h2 className="font-serif text-4xl text-ink sm:text-5xl">
-                Selected Works
-              </h2>
+            <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="min-w-0">
+                <h2 className="font-serif text-5xl text-ink sm:text-6xl">
+                  Bodies of <strong className="font-bold">Work</strong>
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-taupe sm:whitespace-nowrap">
+                  A selection across the artist&apos;s series — the body, memory,
+                  and migration.
+                </p>
+              </div>
               <Link
                 href="/works"
-                className="text-sm text-accent transition-colors hover:text-ink"
+                className="shrink-0 text-sm text-accent transition-colors hover:text-ink"
               >
                 View all →
               </Link>
             </div>
           </Reveal>
-          <div className="grid grid-cols-1 gap-4 sm:auto-rows-[160px] sm:grid-cols-2">
-            {featured.map((w, i) => {
-              const spans = [
-                "sm:row-span-3",
-                "sm:row-span-2",
-                "sm:row-span-2",
-                "sm:row-span-3",
-              ];
+          <div className="mx-auto mt-20 grid max-w-4xl grid-cols-1 gap-6 sm:auto-rows-fr sm:grid-cols-2">
+            {COLLECTIONS.map((c, i) => {
+              const w =
+                (c.img && works.find((x) => x.id === c.img)) ||
+                works.find((x) => x.series === c.series);
+              if (!w) return null;
               return (
                 <Reveal
-                  key={w.id}
+                  key={c.series}
                   dir={dirs[i % dirs.length]}
-                  delay={(i % 3) * 60}
-                  className={`group relative aspect-[4/3] overflow-hidden bg-ink sm:aspect-auto ${spans[i % spans.length]}`}
+                  delay={(i % 2) * 80}
                 >
                   <Link
-                    href={`/works/${w.id}`}
-                    className="block h-full w-full"
+                    href={seriesHref(c.series)}
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_20px_50px_-30px_rgba(38,28,21,0.3)] transition-shadow duration-300 hover:shadow-[0_30px_60px_-25px_rgba(38,28,21,0.4)]"
                   >
-                    <Image
-                      src={w.src}
-                      alt={`${w.title} — ${w.medium}`}
-                      fill
-                      placeholder="blur"
-                      blurDataURL={w.blur}
-                      priority={i < 2}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                      className="scale-110 object-cover transition-transform duration-700 group-hover:scale-125"
-                    />
-                    {/* darken + caption on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="absolute inset-x-0 bottom-0 translate-y-2 p-5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                      <p className="font-serif text-xl leading-tight text-cream">
-                        {w.title}
+                    <div className="relative aspect-[16/10] overflow-hidden bg-ink">
+                      <Image
+                        src={w.src}
+                        alt={`${c.series} — ${w.title}`}
+                        fill
+                        placeholder="blur"
+                        blurDataURL={w.blur}
+                        priority={i < 2}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
+                          c.zoom ? "scale-[1.18] group-hover:scale-[1.24]" : ""
+                        }`}
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6 sm:p-8">
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                        {c.series}
                       </p>
-                      <p className="mt-1 text-xs text-cream/80">{w.medium}</p>
+                      <h3 className="mt-3 font-serif text-2xl leading-snug text-ink sm:text-3xl">
+                        {c.title}
+                      </h3>
+                      <p className="mt-4 text-sm leading-relaxed text-cocoa">
+                        {c.desc}
+                      </p>
+                      <span className="mt-5 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink transition-colors group-hover:text-accent">
+                        View series
+                        <span className="transition-transform duration-200 group-hover:translate-x-1">
+                          →
+                        </span>
+                      </span>
                     </div>
                   </Link>
                 </Reveal>
@@ -169,24 +248,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About teaser */}
-      <section className="border-t border-line bg-paper">
-        <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
-          <Reveal dir="up">
-            <p className="font-serif text-2xl leading-relaxed text-ink sm:text-3xl">
-              A body of work drawn from daily life and memory — the human body,
-              nostalgia, and migration, rendered in ink, charcoal and collage on
-              paper.
-            </p>
-            <Link
-              href="/about"
-              className="mt-8 inline-block text-sm text-accent transition-colors hover:text-ink"
-            >
-              Read more about the artist →
-            </Link>
-          </Reveal>
-        </div>
-      </section>
     </>
   );
 }

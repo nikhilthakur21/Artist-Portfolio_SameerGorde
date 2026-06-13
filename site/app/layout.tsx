@@ -28,8 +28,8 @@ const script = Edu_NSW_ACT_Cursive({
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.fullName} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: "Sameer Portfolio",
+    template: "%s — Sameer Portfolio",
   },
   description: site.tagline,
   openGraph: {

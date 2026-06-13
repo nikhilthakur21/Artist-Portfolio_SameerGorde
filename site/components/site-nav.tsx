@@ -39,7 +39,7 @@ export default function SiteNav() {
       style={{ viewTransitionName: "site-header" }}
       className="sticky top-0 z-50 bg-white/90 shadow-lg backdrop-blur-sm"
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8">
         <Link
           href="/"
           className="group flex items-center gap-3 transition-colors"
@@ -129,7 +129,7 @@ export default function SiteNav() {
       {/* Mobile full-screen menu — sibling of <header> so it's fixed to the
           viewport (the header's backdrop-blur would otherwise contain it) */}
       <div
-        className={`fixed inset-x-0 bottom-0 top-18 z-40 bg-cream transition-all duration-300 md:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-18 z-40 bg-white transition-all duration-300 md:hidden ${
           open
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0"
@@ -138,14 +138,14 @@ export default function SiteNav() {
         <div className="flex flex-col px-6 py-8">
           <Link
             href="/"
-            className="border-b border-line py-4 font-serif text-3xl text-ink"
+            className="border-b border-line py-4 font-serif text-xl text-ink"
           >
             Home
           </Link>
           <button
             type="button"
             onClick={() => setWorksOpen((v) => !v)}
-            className="flex items-center justify-between border-b border-line py-4 font-serif text-3xl text-ink"
+            className="flex items-center justify-between border-b border-line py-4 font-serif text-xl text-ink"
           >
             Works
             <span
@@ -181,7 +181,7 @@ export default function SiteNav() {
             <Link
               key={l.href}
               href={l.href}
-              className="border-b border-line py-4 font-serif text-3xl text-ink"
+              className="border-b border-line py-4 font-serif text-xl text-ink"
             >
               {l.label}
             </Link>
