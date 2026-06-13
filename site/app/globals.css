@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (Saatchi Warm palette) ---------- */
+@theme {
+  --color-cream: #f8f5ee; /* page background (warm off-white) */
+  --color-paper: #fcfbf9; /* cards / sections (near-white) */
+  --color-ink: #261c15; /* headings — deep chocolate-black */
+  --color-cocoa: #3a2d23; /* body text — soft chocolate */
+  --color-taupe: #8a7c6a; /* muted captions */
+  --color-accent: #6b4a30; /* links / hover — chocolate brown */
+  --color-line: #e8e1d5; /* hairlines / borders */
+  --color-gold: #c8a96a; /* footer accent — warm gold */
+  --color-cream-muted: #a89f8f; /* muted light text on dark */
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  --font-script: var(--font-script);
+}
+
+:root {
+  --duration-exit: 150ms;
+  --duration-enter: 240ms;
+}
+
+html {
+  background: var(--color-cream);
+  color: var(--color-cocoa);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #e3d8c4;
+  color: var(--color-ink);
+}
+
+/* ---------- Scroll-reveal (left-in / right-in / zoom / up) ---------- */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal[data-dir="left"] {
+  transform: translateX(-44px);
+}
+.reveal[data-dir="right"] {
+  transform: translateX(44px);
+}
+.reveal[data-dir="up"] {
+  transform: translateY(44px);
+}
+.reveal[data-dir="zoom"] {
+  transform: scale(0.92);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Per-route page transition (smooth page-up on every navigation) ---------- */
+.page-trans {
+  animation: page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Subtle paper-grain texture overlay ---------- */
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ---------- Image hover zoom helper ---------- */
+.zoom-img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .zoom-img {
+  transform: scale(1.04);
+}
+
+/* ---------- Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+  .page-trans {
+    animation: none;
+  }
+  .zoom-img {
+    transition: none;
+  }
+}
